@@ -1,7 +1,7 @@
-#!/user/bin/env python
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
 f = open("./data.csv")
+
 context = f.readlines()
 
 ##################### underline check, dwindow = 1                 #####################
@@ -61,8 +61,8 @@ for line in context:
 		ui_dict[type][uid] = 1
 	
 ### get train X, y
-X = np.zeros((len(train_day29), 4))
-y = np.zeros((len(train_day29)), )
+X = np.zeros(len(train_day29), 4)
+y = np.zeros(len(train_day29), 1)
 id = 0
 for uid in train_day29:
 	last_uid = (uid[0], uid[1], uid[2] - 1)
