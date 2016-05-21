@@ -3,8 +3,8 @@
 
 import sys
 
-st = open('./offline_groundtruth.txt')
-const = st.realines()
+st = open('F:/tianchi_data/ground_truth.csv')
+const = st.readlines()
 
 answer = []
 for a in const:
@@ -13,7 +13,7 @@ for a in const:
 	answer.append(a)
 answer = set(answer)
 
-f = open(sys.argv[1])
+f = open('F:/tianchi_data/ans.csv')
 con = f.readlines()
 you = []
 for a in con:
