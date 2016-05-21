@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-f = open("F:/SelfTeach/TianChi/fresh_comp/fresh_comp_offline/tianchi_fresh_comp_train_user.csv")
+f = open("F:/tianchi_data/tianchi_fresh_comp_train_user.csv")
 context = f.readlines()
 
-wf = open('sample.csv', 'w')
+wf = open('F:/tianchi_data/data_sample.csv', 'w')
 wf.write('user_id,item_id,day\n')
 
 count = 0;
@@ -18,3 +18,4 @@ for line in context:
 	wf.write('%s,%s,%s\n' % (user_id, item_id, day))
 	
 print 'sample size:', count
+wf.close()
