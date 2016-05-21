@@ -15,7 +15,7 @@ for line in context:
     year, month, day = date.split('-')
     if day in ['28','29','30']:
 	count += 1
-	wf.write('%s,%s,%s\n' % (user_id, item_id, day))
+	wf.write('%s,%s,%s,%s\n' % (user_id, item_id, behavior_type, day))
 	
 print 'sample size:', count
 wf.close()

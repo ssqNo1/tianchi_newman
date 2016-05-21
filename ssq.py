@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-f = open("./data.csv")
+f = open("F:/tianchi_data/data_sample.csv")
 
 context = f.readlines()
 
@@ -48,21 +48,21 @@ ui_buy = {}
 
 for line in context:
 	line = line.replace('\n','')
-	array = line.split('.')
+	array = line.split(',')
 	if array[0] == 'user_id':
 		continue
 	uid = (array[0], array[1], int(array[-1]))
-	type = int(array[2]) - 1
-	if type == 3:
+	behavior_type = int(array[2]) - 1
+	if behavior_type == 3:
 		ui_buy[uid] = 1
-	if uid in ui_dict[type]:
-		ui_dict[type][uid] += 1
+	if uid in ui_dict[behavior_type]:
+		ui_dict[behavior_type][uid] += 1
 	else:
-		ui_dict[type][uid] = 1
+		ui_dict[behavior_type][uid] = 1
 	
 ### get train X, y
-X = np.zeros(len(train_day29), 4)
-y = np.zeros(len(train_day29), 1)
+X = np.zeros((len(train_day29), 4))
+y = np.zeros((len(train_day29), 1))
 id = 0
 for uid in train_day29:
 	last_uid = (uid[0], uid[1], uid[2] - 1)
@@ -76,7 +76,7 @@ print '------------------------\n\n'
 print 'train number = ', len(y), ' positive number = ', sum(y), '\n'
 
 ## get predict pX for offline_candidate_day30
-pX = np.zeros((len(offline_candidate_day30)), 4)
+pX = np.zeros((len(offline_candidate_day30), 4))
 id = 0
 for uid in offline_candidate_day30:
 	last_uid = (uid[0], uid[1], uid[2] - 1)
@@ -111,6 +111,7 @@ wf.write('user_id, item_id\n')
 for i in range(437):
 	item = lx[i]
 	wf.write('%s,%s\n'%(item[0][0], item[0][1]))
+wf.close()
 
 	
 
