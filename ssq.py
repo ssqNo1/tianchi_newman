@@ -117,9 +117,9 @@ wf = open('F:/tianchi_data/ans.csv', 'w')
 wf.write('user_id, item_id\n')
 py = []
 for i in range(437):
-    item = lx[i]
-    wf.write('%s,%s\n'%(item[0][0], item[0][1]))
-    py.append(item[0][0]+','+item[0][1])
+    uid = lx[i][0]
+    wf.write('%s,%s\n'%(uid[0], uid[1]))
+    py.append(uid[0]+','+uid[1])
 wf.close()
 
 wf = open('F:/tianchi_data/ground_truth.csv', 'w')
