@@ -1,7 +1,7 @@
 --启动
 .open F:/tianchi_data/fresh.db
 .header on
-
+.mode column
 --输出结果
 .once F:/tianchi_data/
 --补全时间信息
