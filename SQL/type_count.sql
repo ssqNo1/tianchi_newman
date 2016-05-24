@@ -8,6 +8,16 @@ order by 1,2,3
 limit 100;
 
 -------------- 统计每一类的数量 ----------
+create table type_count (
+	user_id text,
+	item_id text,
+	browse text default 0,
+	collect text default 0,
+	cart text default 0,
+	buy text default 0
+);
+
+insert into type_count
 with u1 as (
 	select user_id, item_id, count(*) as 'browse'
 	from oneday
@@ -37,7 +47,8 @@ u4 as (
 	order by 1,2
 )
 select 
-	u.user_id, u.item_id, 
+	u.user_id as user_id, 
+	u.item_id as item_id, 
 	ifnull(browse, 0) as browse,
 	ifnull(collect, 0) as collect, 
 	ifnull(cart,0) as cart,
@@ -47,7 +58,5 @@ left join u1 using (user_id, item_id)
 left join u2 using (user_id, item_id)
 left join u3 using (user_id, item_id)
 left join u4 using (user_id, item_id)
---where date(u.time) = '2014-12-18'
 group by 1,2
-order by 1,2
-limit 50;
+order by 1,2;
