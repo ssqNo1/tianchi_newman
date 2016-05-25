@@ -1,10 +1,13 @@
--------------- 统计2014-12-18的前七天的每一类行为的数量 ----------
+-------------- 统计2014-12-18的前七天的每一类行为的数量 
+----------
 --输出到文件
+.header off
 .mode csv
-.once H:/TianChi/tianchi_newman/feature/user_behavior_count.csv
+.once F:/tianchi_data/feature/user_behavior_count.csv
 select browse,collect,cart,buy from user_behavior_count;
 
 -- 创建特征表
+drop table if exists user_behavior_count;
 create table user_behavior_count (
 	user_id text,
 	item_id text,
@@ -18,10 +21,9 @@ create table user_behavior_count (
 drop table if exists object_day;
 create table object_day (obj text);
 insert into object_day
-(obj) values ('2014-12-18');
+(obj) values ('2014-12-17');
 
--- 考察日加一天
-update object_day set obj = date(datetime(obj, '+1 day'));
+
 
 -- 将指定考察日的特征 插入到特征表
 insert into user_behavior_count
@@ -77,3 +79,7 @@ left join u3 using (user_id, item_id)
 left join u4 using (user_id, item_id)
 group by 1,2
 order by 1,2;
+
+-- 考察日加一天
+update object_day set obj = date(datetime(obj, '+1 day'));
+select * from object_day;

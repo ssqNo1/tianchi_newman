@@ -1,6 +1,13 @@
--- 提取2014-12-18的标签
+-- 提取考察日的标签
+
+--输出到文件
+.header off
+.mode csv
+.once F:/tianchi_data/feature/label.csv
+select label from label;
 
 -- 创建标签表
+drop table if exists label;
 create table label (
 	user_id text,
 	item_id text,
@@ -10,10 +17,8 @@ create table label (
 drop table if exists object_day;
 create table object_day (obj text);
 insert into object_day
-(obj) values ('2014-12-18');
+(obj) values ('2014-12-17');
 
--- 考察日加一天
-update object_day set obj = date(datetime(obj, '+1 day'));
 
 -- 将指定考察日的标签插入到标签表
 insert into label
@@ -37,9 +42,12 @@ u4 as ( -- 看考察日当天是否有购买行为
 )
 select 
 	u.user_id, u.item_id,
-	ifnull(buy,0) as buy
+	ifnull(buy,0)
 from u
 left join u4 using (user_id, item_id)
 group by 1,2
 order by 1,2;
 
+-- 考察日加一天
+update object_day set obj = date(datetime(obj, '+1 day'));
+select * from object_day;

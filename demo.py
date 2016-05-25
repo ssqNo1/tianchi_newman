@@ -1,4 +1,9 @@
 # -*- coding: utf-8 -*-
+
+# 用28,29,30三天的数据
+# 考察日29作为训练，30作为测试
+# 特征为前一天的行为统计
+
 import sys
 sys.path.append('F:/SelfTeach/TianChi/fresh_comp/code')
 from evaluate import *
