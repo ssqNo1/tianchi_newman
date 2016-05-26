@@ -3,9 +3,8 @@
 --输出到文件
 .header off
 .mode csv
-.once F:/tianchi_data/feature/label.csv
-select label from label;
-select * from label; -- 输出所有列，用于预测
+.once F:/tianchi_data/feature/candidate_off.csv
+select user_id, item_id from label;
 
 -- 创建标签表
 drop table if exists label;

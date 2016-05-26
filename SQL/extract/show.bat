@@ -1,0 +1,2 @@
+@ECHO show
+pause

@@ -3,8 +3,8 @@
 -- 输出到文件 ----------------------------------
 .header off
 .mode csv
-.once F:/tianchi_data/feature/user_behavior_count.csv
-select browse,collect,cart,buy from user_behavior_count;
+.once F:/tianchi_data/feature/candidate_online.csv
+select user_id, item_id from user_behavior_count;
 
 -- 创建特征表 ----------------------------------
 drop table if exists user_behavior_count;
@@ -21,7 +21,7 @@ create table user_behavior_count (
 drop table if exists object_day;
 create table object_day (obj text);
 insert into object_day
-(obj) values ('2014-11-25');
+(obj) values ('2014-12-19');
 
 
 
