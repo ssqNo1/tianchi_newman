@@ -5,6 +5,7 @@
 .mode csv
 .once F:/tianchi_data/feature/label.csv
 select label from label;
+select * from label; -- 输出所有列，用于预测
 
 -- 创建标签表
 drop table if exists label;
@@ -17,7 +18,7 @@ create table label (
 drop table if exists object_day;
 create table object_day (obj text);
 insert into object_day
-(obj) values ('2014-12-17');
+(obj) values ('2014-12-18');
 
 
 -- 将指定考察日的标签插入到标签表

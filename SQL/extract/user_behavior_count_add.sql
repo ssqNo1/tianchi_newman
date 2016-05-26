@@ -1,30 +1,3 @@
--------------- 统计考察日的前一天的每一类行为的数量 
-
--- 输出到文件 ----------------------------------
-.header off
-.mode csv
-.once F:/tianchi_data/feature/user_behavior_count.csv
-select browse,collect,cart,buy from user_behavior_count;
-
--- 创建特征表 ----------------------------------
-drop table if exists user_behavior_count;
-create table user_behavior_count (
-	user_id text,
-	item_id text,
-	browse text,
-	collect text,
-	cart text,
-	buy text
-);
-
--- 创建用于 指定考察日的表 ---------------------
-drop table if exists object_day;
-create table object_day (obj text);
-insert into object_day
-(obj) values ('2014-11-25');
-
-
-
 -- 将指定考察日的特征 插入到特征表 --------------------
 
 insert into user_behavior_count
@@ -87,4 +60,3 @@ order by 1,2;
 
 -- 考察日加一天
 update object_day set obj = date(datetime(obj, '+1 day'));
-select * from object_day;
