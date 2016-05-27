@@ -70,7 +70,7 @@ for line in data:
     user_id, item_id = line.split(',')
     candidate.append((user_id, item_id));
 
-print 'data loaded'
+print '--data loaded'
 print 'training size = ', len(x_train)
 print 'feature num = ', len(x_train[0])
 	
@@ -84,7 +84,7 @@ model = RandomForestClassifier()
 
 model.fit(x_train, y_train)
 
-print 'training done'
+print '--training done'
 
 y_prob = model.predict_proba(x_test)
 y_p = []
@@ -99,9 +99,9 @@ comb = zip(candidate, y_prob)
 comb = sorted(comb, key = lambda x:x[1], reverse = True)
 
 ## select top candidate
-predict_num = 450
+predict_num = 517
 
-wf = open('F:/tianchi_data/test/tianchi_mobile_recommendation_predict.csv', 'w')
+wf = open('F:/tianchi_data/tianchi_mobile_recommendation_predict.csv', 'w')
 wf.write('user_id,item_id\n')
 ui_predict = []
 for c in comb:
