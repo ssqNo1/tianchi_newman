@@ -31,17 +31,17 @@ insert into user_behavior_count
 with candidate as ( -- 选取前一天的所有交互和前七天的非浏览交互作为候选对
 	select user_id, item_id
 	from user, object_day	
-	where date(time) = date(datetime(object_day.obj, '-1 day'))
+	where date(time) = date(object_day.obj, '-1 day')
 	or (
-		date(time) <= date(datetime(object_day.obj, '-1 day')) and
-		date(time) >= date(datetime(object_day.obj, '-7 day')) and
+		date(time) <= date(object_day.obj, '-1 day') and
+		date(time) >= date(object_day.obj, '-7 day') and
 		behavior_type != 1
 	)
 ),
 u as ( -- 只统计前一天的所有交互的每一类行为的数量
 	select user_id, item_id, behavior_type
 	from user, object_day
-	where date(time) = date(datetime(object_day.obj, '-1 day'))
+	where date(time) = date(object_day.obj, '-1 day')
 ),
 u1 as (
 	select user_id, item_id, count(*) as 'browse'

@@ -13,7 +13,26 @@ create table oneday as
 	where date(time) = '2014-12-17'
 	and strftime('%H',time)%2=0;
 
+-- 统计每一天的商品子集的购买量（去重）
+select date(time), count(distinct user_id||','||item_id)
+from user
+join item using(item_id)
+where behavior_type = 4
+group by 1
+order by 1;
 
+
+select count(*) as buy_count from (
+	select user_id, item_id 
+	from user
+	join item using(item_id)
+	where date(time) = '2014-12-18'
+	and behavior_type = 4
+	group by 1,2
+	order by 1,2
+);
+
+	
 
 
 	

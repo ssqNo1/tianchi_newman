@@ -75,10 +75,13 @@ print 'training size = ', len(x_train)
 print 'feature num = ', len(x_train[0])
 	
 ### train and predict ##############################################
-#from sklearn.ensemble import RandomForestClassifier
+
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
-model = LogisticRegression()
-#model = RandomForestClassifier()
+
+#model = LogisticRegression()
+model = RandomForestClassifier()
+
 model.fit(x_train, y_train)
 
 print 'training done'

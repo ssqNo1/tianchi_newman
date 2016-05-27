@@ -18,13 +18,13 @@ for line in data:
 f_x_train = open("F:/tianchi_data/feature/x_train.csv")
 f_y_train = open("F:/tianchi_data/feature/y_train.csv")
 f_x_test_off = open("F:/tianchi_data/feature/x_test_offline.csv")
-f_y_test_off = open("F:/tianchi_data/feature/y_test_offline.csv")
 f_candidate_off = open("F:/tianchi_data/feature/candidate_offline.csv")
+f_ui_truth = open("F:/tianchi_data/feature/ui_truth_18.csv")
 
 x_train = []
 y_train = []
 x_test = []
-y_truth = []
+
 candidate = []
 ui_truth = []
 
@@ -58,26 +58,25 @@ for line in data:
     user_id, item_id = line.split(',')
     candidate.append((user_id, item_id));
 
-# y_truth
-data = f_y_test_off.readlines()
-for line in data:
-    y_truth.append(line[0])
-
+data = f_ui_truth.readlines()
 # ui_truth
-for i in range(len(y_truth)):
-    user_id, item_id = candidate[i]
-    if y_truth[i] == '1' and item_id in item_set:
-        ui_truth.append(user_id+','+item_id)
+for line in data: 
+    line = line.replace('\n','')
+    user_id, item_id = line.split(',')
+    ui_truth.append(user_id+','+item_id)
 
 print 'data loaded'
 print 'training size = ', len(x_train)
 print 'feature num = ', len(x_train[0])
 
 ### train and predict ##############################################
-#from sklearn.ensemble import RandomForestClassifier
+
+from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
-model = LogisticRegression()
-#model = RandomForestClassifier()
+
+#model = LogisticRegression()
+model = RandomForestClassifier()
+
 model.fit(x_train, y_train)
 
 print 'training done'
@@ -95,7 +94,7 @@ comb = zip(candidate, y_prob)
 comb = sorted(comb, key = lambda x:x[1], reverse = True)
 
 ## select top candidate
-predict_num = 450
+predict_num = 500
 
 wf = open('F:/tianchi_data/test/offline_predict.csv', 'w')
 wf.write('user_id,item_id\n')
@@ -109,13 +108,23 @@ for c in comb:
         if len(ui_predict) >= predict_num:
             break
 wf.close()
-print 'predict num = ',len(ui_predict)
+
 ### evaluate ##############################################
 
-import sys
-sys.path.append('F:/SelfTeach/TianChi/fresh_comp/code')
-from evaluate import evaluate
-evaluate(ui_truth,ui_predict);
+
+answer = set(ui_truth)
+you = set(ui_predict)
+inter = answer & you
+
+print 'hit number = ', len(inter)
+if len(inter) > 0:
+    a = len(answer)
+    b = len(you)
+    c = len(inter)
+    R = 100.0 * c / a
+    P = 100.0 * c / b
+    F1 = 2.0 * R * P / (R + P)
+    print 'predict/truth,  F1,P,R:  %d/%d,  %.2f%%,%.2f%%,%.2f%%\n' % (b, a, F1, P, R)
 
 
 
