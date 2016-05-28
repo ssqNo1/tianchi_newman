@@ -15,11 +15,11 @@ for line in data:
     item_set.add(array[0])
 
 ## 读取训练测试数据
-f_x_train = open("F:/tianchi_data/feature/x_train_s.csv")
-f_y_train = open("F:/tianchi_data/feature/y_train_s.csv")
+f_x_train = open("F:/tianchi_data/feature/x_train.csv")
+f_y_train = open("F:/tianchi_data/feature/y_train.csv")
 f_x_test_off = open("F:/tianchi_data/feature/x_test_offline.csv")
 f_candidate_off = open("F:/tianchi_data/feature/candidate_offline.csv")
-f_ui_truth = open("F:/tianchi_data/feature/ui_truth_active.csv")
+f_ui_truth = open("F:/tianchi_data/feature/ui_truth_appear.csv")
 
 x_train = []
 y_train = []
@@ -58,8 +58,8 @@ for line in data:
     user_id, item_id = line.split(',')
     candidate.append((user_id, item_id));
 
-data = f_ui_truth.readlines()
 # ui_truth
+data = f_ui_truth.readlines()
 for line in data: 
     line = line.replace('\n','')
     user_id, item_id = line.split(',')
@@ -74,8 +74,8 @@ print 'feature num = ', len(x_train[0])
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 
-model = LogisticRegression()
-#model = RandomForestClassifier()
+#model = LogisticRegression()
+model = RandomForestClassifier()
 
 model.fit(x_train, y_train)
 
@@ -94,20 +94,18 @@ comb = zip(candidate, y_prob)
 comb = sorted(comb, key = lambda x:x[1], reverse = True)
 
 ## select top candidate
-predict_num = 238
+predict_num = 517
 
-wf = open('F:/tianchi_data/test/offline_predict.csv', 'w')
-wf.write('user_id,item_id\n')
+
 ui_predict = []
 for c in comb:
     user_id, item_id = c[0]   
     if item_id in item_set:
         ui = user_id+','+item_id
-        wf.write(ui+'\n')
         ui_predict.append(ui)
         if len(ui_predict) >= predict_num:
             break
-wf.close()
+
 
 ### evaluate ##############################################
 
@@ -125,7 +123,3 @@ if len(inter) > 0:
     P = 100.0 * c / b
     F1 = 2.0 * R * P / (R + P)
     print 'predict/truth,  F1,P,R:  %d/%d,  %.2f%%,%.2f%%,%.2f%%\n' % (b, a, F1, P, R)
-
-
-
-
